@@ -7,6 +7,6 @@ const router = express.Router();
 
 router.post('/',profileControllers.createProfile);
 
-router.patch('/',profileControllers.updateProfile);
+router.patch('/:profid',profileControllers.updateProfile);
 
 module.exports = router;
