@@ -5,7 +5,7 @@ const Schema = moongoose.Schema;
 
 const profileSchema = new Schema({
 
-  image:{type:String,required:true},
+  image:{type:String},
   fullName:{type:String,required:true},
   address:{type:String,required:true},
   registrationNumber:{type:Number,required:true},
