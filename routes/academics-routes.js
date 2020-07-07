@@ -7,14 +7,11 @@ const router = express.Router();
 
 router.get('/timetable',academicsControllers.getTimetable);
 
-
-
 router.post('/attendance/regLec',academicsControllers.postAttendanceByRegLec);
 
 router.post('/attendance/extraLec',academicsControllers.postAttendanceByRegLec);
 
 router.post('/attendance/viewStudnets',academicsControllers.postAttendanceByRegLec);
-
 
 
 module.exports = router;

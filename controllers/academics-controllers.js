@@ -11,7 +11,7 @@ const postAttendanceByExtraLec = (req,res,next) => {
 const postAttendanceByViewStudents = (req,res,next) => {
 
 };
-const getTimeTable = (req,res)=>{
+const getTimeTable = (req,res,next)=>{
 
 };
 
