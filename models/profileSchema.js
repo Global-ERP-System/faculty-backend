@@ -16,16 +16,8 @@ const profileSchema = new Schema({
   college:{type:String,required:true},
   experience:{type:String,required:true},
   duration:{type:Number,required:true},
-  user : {
-    id : {
-      type : mongoose.Schema.Types.ObjectId;
-      ref : User
-    },
-    username : String,
-    email : String
-  }
+  creator : {  type : mongoose.Types.ObjectId,required:true, ref : 'User'}
   
-
 });
 
 profileSchema.plugin(uniqueValidator);
