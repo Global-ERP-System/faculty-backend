@@ -47,7 +47,7 @@ const postAttendanceByRegLec = async (req,res,next) => {
     return next(error);
   }
   
-  res.status(201).json({regLec:createRegLecture});
+  res.status(201).json({regLec:createRegLecture.toObject({getters:true})});
 };
 
 const postAttendanceByExtraLec = async (req,res,next) => {
@@ -84,7 +84,7 @@ const postAttendanceByExtraLec = async (req,res,next) => {
     return next(error);
   }
   
-  res.status(201).json({regLec:createExtLecture});
+  res.status(201).json({regLec:createExtLecture.toObject({getters:true})});
 };
 
 const getAttendanceByViewStudents = async (req,res,next) => {
