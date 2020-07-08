@@ -27,7 +27,7 @@ const postAttendanceByRegLec = async (req,res,next) => {
   const  month = d.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
   const  year = d.getFullYear();
  
-  const  dateStr = date  + month  + year;
+  const  dateStr = date  + "-" + month + "-"  + year;
 
   const createRegLecture = new Academics({
     
@@ -65,7 +65,7 @@ const postAttendanceByExtraLec = async (req,res,next) => {
   const  month = d.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
   const  year = d.getFullYear();
  
-  const  dateStr = date  + month  + year;
+  const  dateStr = date  + "-" + month + "-"  + year;
 
   const createExtraLecture = new Academics({
     date: {regLec :{rollNos: rollNos}},
@@ -139,7 +139,7 @@ const getAttendanceByViewStudents = async (req,res,next) => {
     );
     return next(error);
   }
-  res.status(200).json({attendance : attendance});
+  res.status(200).json({attendance:attendance});
     
 }
 
