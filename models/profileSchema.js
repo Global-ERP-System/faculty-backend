@@ -18,11 +18,9 @@ const profileSchema = new Schema({
   duration:{type:Number,required:true},
   user : {
     id : {
-      type : mongoose.Schema.Types.ObjectId;
-      ref : User
-    },
-    username : String,
-    email : String
+      type : mongoose.Schema.Types.ObjectId,
+      ref : 'User'
+    }
   }
   
 
