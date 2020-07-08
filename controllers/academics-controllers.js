@@ -73,7 +73,7 @@ const getAttendanceByViewStudents = (req,res,next) => {
 
 // };
 
-exports.getrollNos = getrollNos;
+// exports.getrollNos = getrollNos;
 exports.postAttendanceByRegLec = postAttendanceByRegLec;
 exports.postAttendanceByExtraLec = postAttendanceByExtraLec;
 exports.postAttendanceByViewStudents = postAttendanceByViewStudents;
