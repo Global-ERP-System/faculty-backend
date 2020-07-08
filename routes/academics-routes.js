@@ -15,7 +15,7 @@ router.post('/attendance/regLec',academicsControllers.postAttendanceByRegLec);
 router.post('/attendance/extraLec',academicsControllers.postAttendanceByRegLec);
 
 //vsaid: view studnets attendance id
-router.get('/attendance/viewStudents/:vsaid',academicsControllers.postAttendanceByRegLec);
+router.get('/attendance/viewStudents/:dateId',academicsControllers.postAttendanceByRegLec);
 
 
 module.exports = router;

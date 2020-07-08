@@ -12,6 +12,7 @@ const Academics = require('../models/academicsSchema');
 
 
 const postAttendanceByRegLec = async (req,res,next) => {
+
   const errors= validationResult(req);
   if(!errors.isEmpty()){
     return next(
@@ -20,11 +21,21 @@ const postAttendanceByRegLec = async (req,res,next) => {
   }
   const {rollNos,present,absent} = req.body;
 
+  const  d = new Date();
+ 
+  const  date = d.getDate();
+  const  month = d.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
+  const  year = d.getFullYear();
+ 
+  const  dateStr = date + "/" + month + "/" + year;
+
   const createRegLecture = new Academics({
     
     regLec.rollNos = [...regLec.rollNos,rollNos],
     regLec.present = new Array(regLec.present,present),
     regLec.absent = new Array(regLec.absent,absent),
+    date = dateStr
+
   })
   try{
     await createRegLecture.save();
@@ -48,10 +59,19 @@ const postAttendanceByExtraLec = (req,res,next) => {
   }
   const {rollNos,present,absent} = req.body;
 
+  const  d = new Date();
+ 
+  const  date = d.getDate();
+  const  month = d.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
+  const  year = d.getFullYear();
+ 
+  const  dateStr = date + "/" + month + "/" + year;
+
   const createExtraLecture = new AnimationPlaybackEvent({
     extraLec.rollNos = new Array(extraLec.rollNos,rollNos),
     extraLec.present = new Array(extraLec.present,present),
     extraLec.absent = new Array(extraLec.absent,absent),
+    date = dateStr
   })
 
   try{
@@ -67,8 +87,19 @@ const postAttendanceByExtraLec = (req,res,next) => {
   res.status(201).json({regLec:createExtLecture});
 };
 
-const getAttendanceByViewStudents = (req,res,next) => {
-  const vsaid = req.params.vsaid;
+const getAttendanceByViewStudents = async (req,res,next) => {
+  const dateId = req.params.dateId;
+
+  let attendance;
+  try{
+    attendance = await Academics.find(a =>a.date === dateId); 
+  }catch(err){
+    const error = new HttpError(
+      'getting attendance failed,please try again',
+      500
+    );
+    return next(error);
+  }
 
   const  {currentRegLecAttendance }= Academics.regLec;
   const {currentExtraLecAttendance} = Academics.extraLec;

@@ -69,7 +69,7 @@ const createProfile = async (req,res,next) => {
 
 }
 
-const updateProfilebyId = async (req,res,next) => {
+const updateProfilebyUserId = async (req,res,next) => {
   const errors= validationResult(req);
   if(!errors.isEmpty()){
     return next(
