@@ -4,7 +4,7 @@ const uniqueValidator = require('mongoose-unique-validator');
 const Schema = moongoose.Schema;
 
 const profileSchema = new Schema({
-
+  
   image:{type:String},
   fullName:{type:String,required:true},
   address:{type:String,required:true},

@@ -67,15 +67,20 @@ const postAttendanceByExtraLec = (req,res,next) => {
 };
 
 const getAttendanceByViewStudents = (req,res,next) => {
-  Academics.viewStudents.find({},(err,students)=>{
-    if (err) {
-      console.log(err);
-      
-    } else {
-      console.log(students);
-      
-    }
-  });
+  const vsaid = req.params.vsaid;
+
+  let presentdays = 0;
+  let absentdays =0; 
+  // Academics.viewStudents.present.find ((p) => {
+  //   if(p.value === true){
+  //     presentStudents +=1;
+  //   }else{
+  //     absentStudents +=1;
+  //   }
+  // })
+
+  // let attendance = 0;
+
 };
 // const getTimeTable = (req,res,next)=>{
 
