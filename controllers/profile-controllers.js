@@ -1,15 +1,33 @@
 const { validationResult } = require('express-validator');
 
 const HttpError = require('../models/http-error');
-const profile = require('../models/profileSchema');
+
 
 const Profile = require('../models/profileSchema');
 
 const createProfile = (req,res,next) => {
-  profile.create(req.body,(err,newUser)=>{
+  const fullName = req.body.fullName,
+  address = req.body.address,
+  phoneNumber = req.body.phoneNumber,
+  bloodGroup = req.body.bloodGroup,
+  emailId = req.body.emailId,
+  college = req.body.college,
+  duration = req.body.duration,
+  experience = req.body.experience;
+  const profileData = {
+    fullName : fullName,
+    address : address,
+    phoneNumber : phoneNumber,
+    bloodGroup : bloodGroup,
+    emailId : emailId,
+    college : college,
+    duration:duration,
+    experience : experience
+  }
+  Profile.create(profileData,(err,newUser)=>{
     if (err) {
       console.log(err);
-      
+       
     } else {
       
     }
