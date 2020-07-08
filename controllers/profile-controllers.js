@@ -8,7 +8,7 @@ const createProfile = (req,res,next) => {
 
 }
 
-const updateProfile = async (req,res,next) => {
+const updateProfilebyUserId = async (req,res,next) => {
   const errors= validationResult(req);
   if(!errors.isEmpty()){
     return next(
@@ -48,4 +48,4 @@ const updateProfile = async (req,res,next) => {
 }
 
 exports.createProfile = createProfile;
-exports.updateProfile = updateProfile;
+exports.updateProfilebyUserId = updateProfilebyUserId;
