@@ -2,8 +2,10 @@ const { validationResult } = require('express-validator');
 
 const HttpError = require('../models/http-error');
 
+const Profile = require('../models/profileSchema');
+
 const createProfile = (req,res,next) => {
-  
+
 }
 
 const updateProfile = async (req,res,next) => {
@@ -33,7 +35,7 @@ const updateProfile = async (req,res,next) => {
   updatedProfile.emailId = emailId; 
   
   try{
-    await updatedProfile.save();
+    await Profile.save();
   }catch(err){
     const error = new HttpError(
       'Something went wrong,couldnt update profile',500
