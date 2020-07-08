@@ -7,12 +7,12 @@ const academicsSchema = new Schema({
   // timeTable : {type:String},
   
     reglec:{
-      rollnos:[{type:Number,unique:true}],
+      rollnos:[{type:String,unique:true}],
       present:[{type:Boolean,required:true}],
       absent:[{type:Boolean,required:true}]
     },
     extralec:{
-      rollnos:[{type:Number,unique:true}],
+      rollnos:[{type:String,unique:true}],
       present:[{type:Boolean,required:true}],
       absent:[{type:Boolean,required:true}]
     },

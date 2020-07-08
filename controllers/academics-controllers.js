@@ -60,7 +60,15 @@ const postAttendanceByExtraLec = (req,res,next) => {
 };
 
 const getAttendanceByViewStudents = (req,res,next) => {
-  
+  Academics.viewStudents.find({},(err,students)=>{
+    if (err) {
+      console.log(err);
+      
+    } else {
+      console.log(students);
+      
+    }
+  });
 };
 // const getTimeTable = (req,res,next)=>{
 
@@ -69,4 +77,4 @@ const getAttendanceByViewStudents = (req,res,next) => {
 exports.postAttendanceByRegLec = postAttendanceByRegLec;
 exports.postAttendanceByExtraLec = postAttendanceByExtraLec;
 exports.postAttendanceByViewStudents = postAttendanceByViewStudents;
-exports.getTimeTable =getTimeTable;
+exports.getAttendanceByViewStudents =getAttendanceByViewStudents;

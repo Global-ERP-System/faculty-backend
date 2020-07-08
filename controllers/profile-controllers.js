@@ -1,9 +1,17 @@
 const { validationResult } = require('express-validator');
 
 const HttpError = require('../models/http-error');
+const profile = require('../models/profileSchema');
 
 const createProfile = (req,res,next) => {
-
+  profile.create(req.body,(err,newUser)=>{
+    if (err) {
+      console.log(err);
+      
+    } else {
+      
+    }
+  });
 }
 
 const updateProfile = async (req,res,next) => {
