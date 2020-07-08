@@ -16,14 +16,17 @@ const profileSchema = new Schema({
   college:{type:String,required:true},
   experience:{type:String,required:true},
   duration:{type:Number,required:true},
+<<<<<<< HEAD
   user : {
     id : {
       type : mongoose.Schema.Types.ObjectId,
       ref : 'User'
     }
   }
+=======
+  creator : {  type : mongoose.Types.ObjectId,required:true, ref : 'User'}
+>>>>>>> cade75ede1611249a6cd78cf48b04ec11b446fd9
   
-
 });
 
 profileSchema.plugin(uniqueValidator);
