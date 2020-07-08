@@ -99,7 +99,7 @@ const updateProfilebyId = async (req,res,next) => {
   let user;
   
   try{
-    user = await User.findById(profileId);
+    user = await User.profile.findById(profileId);
   }catch(err){
     const error= new HttpError(
       'creating place failed,please try again',500
