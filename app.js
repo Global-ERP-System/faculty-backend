@@ -18,9 +18,10 @@ app.use((req,res,next) => {
 
 
 mongoose
-    .connect('mongodb+srv://rohan:mongodb+srv://<username>:<password>@cluster0-ri8lk.mongodb.net/facultyMain?retryWrites=true&w=majority@cluster0-ri8lk.mongodb.net/<dbname>?retryWrites=true&w=majority')
+    .connect('mongodb+srv://rohan:qkLzF0DOjiTxbVA3@cluster0-ri8lk.mongodb.net/facultyWireFrame?retryWrites=true&w=majority',
+    { useNewUrlParser: true, useUnifiedTopology: true,useCreateIndex: true  })
     .then(() => {
-        app.listen(process.env.PORT || 5000, ()=>{
+        app.listen( 5000, ()=>{
             console.log("Server initiated!");
         });
     })

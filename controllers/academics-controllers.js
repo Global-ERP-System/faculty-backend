@@ -31,10 +31,10 @@ const postAttendanceByRegLec = async (req,res,next) => {
 
   const createRegLecture = new Academics({
     
-    regLec.rollNos = [...regLec.rollNos,rollNos],
-    regLec.present = new Array(regLec.present,present),
-    regLec.absent = new Array(regLec.absent,absent),
-    date = dateStr
+    date: {regLec :{rollNos: rollNos}},//.regLec.rollNos = new Array(date.regLec.rollNos,rollNos),
+    date:{regLec : {present: present}},//.regLec.present = new Array(date.regLec.present,present),
+    date:{regLec:{absent:absent}},//.regLec.absent = new Array(date.regLec.absent,absent),
+    date : dateStr
 
   })
   try{
@@ -50,7 +50,7 @@ const postAttendanceByRegLec = async (req,res,next) => {
   res.status(201).json({regLec:createRegLecture});
 };
 
-const postAttendanceByExtraLec = (req,res,next) => {
+const postAttendanceByExtraLec = async (req,res,next) => {
   const errors= validationResult(req);
   if(!errors.isEmpty()){
     return next(
@@ -67,15 +67,15 @@ const postAttendanceByExtraLec = (req,res,next) => {
  
   const  dateStr = date + "/" + month + "/" + year;
 
-  const createExtraLecture = new AnimationPlaybackEvent({
-    extraLec.rollNos = new Array(extraLec.rollNos,rollNos),
-    extraLec.present = new Array(extraLec.present,present),
-    extraLec.absent = new Array(extraLec.absent,absent),
-    date = dateStr
+  const createExtraLecture = new Academics({
+    date: {regLec :{rollNos: rollNos}},//.regLec.rollNos = new Array(date.regLec.rollNos,rollNos),
+    date:{regLec : {present: present}},//.regLec.present = new Array(date.regLec.present,present),
+    date:{regLec:{absent:absent}},//.regLec.absent = new Array(date.regLec.absent,absent),
+    date : dateStr
   })
 
   try{
-    await createExtLecture.save();
+    await createExtraLecture.save();
   }catch(err){
     const error = new HttpError(
       'creating reg lec failed,please try again',
@@ -152,5 +152,4 @@ const getAttendanceByViewStudents = async (req,res,next) => {
 // exports.getrollNos = getrollNos;
 exports.postAttendanceByRegLec = postAttendanceByRegLec;
 exports.postAttendanceByExtraLec = postAttendanceByExtraLec;
-exports.postAttendanceByViewStudents = postAttendanceByViewStudents;
 exports.getAttendanceByViewStudents =getAttendanceByViewStudents;

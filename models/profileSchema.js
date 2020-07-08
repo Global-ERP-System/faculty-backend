@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
-const Schema = moongoose.Schema;
+const Schema = mongoose.Schema;
 
 const profileSchema = new Schema({
   

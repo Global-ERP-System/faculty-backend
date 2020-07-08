@@ -21,6 +21,6 @@ fileUpload.single('image'),
     check('duration').not().isEmpty()
   ],profileControllers.createProfile);
 
-router.patch('/:profid',profileControllers.updateProfile);
+router.patch('/:profid',profileControllers.updateProfilebyUserId);
 
 module.exports = router;
