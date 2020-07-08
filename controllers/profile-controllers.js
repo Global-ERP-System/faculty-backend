@@ -83,8 +83,6 @@ const updateProfilebyId = async (req,res,next) => {
   let profile;
   try{
     profile = Profile.findById(profileId);
-    
-
   }catch(err){
     const error = new HttpError(
       'Something went wrong, couldnt update profile',500
@@ -98,10 +96,28 @@ const updateProfilebyId = async (req,res,next) => {
   profile.bloodGroup = bloodGroup;
   profile.emailId = emailId; 
   
+  let user;
+  
+  try{
+    user = await User.findById(profileId);
+  }catch(err){
+    const error= new HttpError(
+      'creating place failed,please try again',500
+    );
+    return next(error);
+  }
+
+  if(!user){
+    const error = new HttpError('Couldnt find user for provided id',404)
+    return next(error);
+  }
+
   try{
     const sess = await mongoose.startSession();
     sess.startTransaction();
     await profile.save({session:sess});
+    user.profile = profile;
+    await user.save({session :sess});
     await sess.commitTransaction();
   }catch(err){
     const error = new HttpError(
@@ -110,7 +126,7 @@ const updateProfilebyId = async (req,res,next) => {
     return next(error);
   }
 
-  res.status(200).json({profile: (await profile).toObject({getters:true})});
+  res.status(200).json({profile:  profile.toObject({getters:true})});
 
 }
 
