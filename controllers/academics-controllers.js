@@ -101,9 +101,9 @@ const getAttendanceByViewStudents = async (req,res,next) => {
     return next(error);
   }
 
-  const  {currentRegLecAttendance }= Academics.regLec;
-  const {currentExtraLecAttendance} = Academics.extraLec;
-  const  {currentAttendance }= Academics.viewStudents;
+  const  {currentRegLecAttendance }= attendance.regLec;
+  const {currentExtraLecAttendance} = attendance.extraLec;
+  const  {currentAttendance }= attendance.viewStudents;
 
   let presentDaysArrayRegLec = currentRegLecAttendance.present;
   let presentDays = currentAttendance.presentDays;
