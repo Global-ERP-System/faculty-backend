@@ -68,9 +68,9 @@ const postAttendanceByExtraLec = async (req,res,next) => {
   const  dateStr = date + "/" + month + "/" + year;
 
   const createExtraLecture = new Academics({
-    date: {regLec :{rollNos: rollNos}},//.regLec.rollNos = new Array(date.regLec.rollNos,rollNos),
-    date:{regLec : {present: present}},//.regLec.present = new Array(date.regLec.present,present),
-    date:{regLec:{absent:absent}},//.regLec.absent = new Array(date.regLec.absent,absent),
+    date: {regLec :{rollNos: rollNos}},
+    date:{regLec : {present: present}},
+    date:{regLec:{absent:absent}},
     date : dateStr
   })
 
@@ -107,13 +107,13 @@ const getAttendanceByViewStudents = async (req,res,next) => {
 
   let presentDaysArrayRegLec = currentRegLecAttendance.present;
   let presentDays = currentAttendance.presentDays;
-  let absentdays = currentAttendance.absentDays;
+  let absentDays = currentAttendance.absentDays;
 
   presentDaysArrayRegLec .map( p => {
     if(p.value === true){
       presentDays +=1;
     }else{
-      absentStudents +=1;
+      absentDays +=1;
     }
   })
 
@@ -122,7 +122,7 @@ const getAttendanceByViewStudents = async (req,res,next) => {
     if(p.value === true){
       presentDays +=1;
     }else{
-      absentStudents +=1;
+      absentDays +=1;
     }
   })
 
@@ -131,7 +131,7 @@ const getAttendanceByViewStudents = async (req,res,next) => {
   currentAttendance.attendance = Math.floor((presentdays)*(100)/(presentdays + absentdays));
 
   try{
-    await currentAttendance.save();
+    await attendance.save();
   }catch(err){
     const error = new HttpError(
       'fetching attendance failed, please try agian later.',
@@ -139,7 +139,7 @@ const getAttendanceByViewStudents = async (req,res,next) => {
     );
     return next(error);
   }
-  res.status(200).json({currentAttendance : currentAttendance});
+  res.status(200).json({attendance : attendance});
     
 }
 
