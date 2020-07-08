@@ -1,40 +1,54 @@
 const { validationResult } = require('express-validator');
 
 const HttpError = require('../models/http-error');
+<<<<<<< HEAD
 
+
+=======
 
 const Profile = require('../models/profileSchema');
 
-const createProfile = (req,res,next) => {
-  const fullName = req.body.fullName,
-  address = req.body.address,
-  phoneNumber = req.body.phoneNumber,
-  bloodGroup = req.body.bloodGroup,
-  emailId = req.body.emailId,
-  college = req.body.college,
-  duration = req.body.duration,
-  experience = req.body.experience;
-  const profileData = {
-    fullName : fullName,
-    address : address,
-    phoneNumber : phoneNumber,
-    bloodGroup : bloodGroup,
-    emailId : emailId,
-    college : college,
-    duration:duration,
-    experience : experience
+const createProfile = async (req,res,next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return next(
+      new HttpError('Invalid inputs passed, please check your data.', 422)
+    );
   }
-  Profile.create(profileData,(err,newUser)=>{
-    if (err) {
-      console.log(err);
-       
-    } else {
-      
-    }
-  });
+  //shoudl include image also
+  const {
+    fullName,address,registrationNumber,phoneNumber,bloodGroup,campusCode,emailId,college,experience,duration
+  }= req.body;
+
+  const createdProfile = new Profile({
+    image : 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/400px-Empire_State_Building_%28aerial_view%29.jpg',
+    fullName,
+    address,
+    registrationNumber,
+    phoneNumber,
+    bloodGroup,
+    campusCode,
+    emailId,
+    college,
+    experience,
+    duration
+  })
+  try{
+    await createdProfile.save();
+  }catch (err) {
+    const error = new HttpError(
+      'Creating profile failed, please try again.',
+      500
+    );
+    return next(error);
+  }
+
+  res.status(201).json({ profile: createdProfile });
+
+>>>>>>> 53213a887998ff5721c68dc0397e41fda954fdbd
 }
 
-const updateProfilebyUserId = async (req,res,next) => {
+const updateProfilebyId = async (req,res,next) => {
   const errors= validationResult(req);
   if(!errors.isEmpty()){
     return next(
@@ -45,23 +59,24 @@ const updateProfilebyUserId = async (req,res,next) => {
   const {fullName,address,phoneNumber,bloodGroup,emailId} =req.body;
   const profileId = req.params.profid;
 
-  let updatedProfile;
+  let profile;
   try{
-     updatedProfile = await updateProfile.findById(profileId);
+    profile = Profile.findById(profileId);
   }catch(err){
     const error = new HttpError(
-      'something went wrong, couldnt update place',500
+      'Something went wrong, couldnt update profile',500
     );
     return next(error);
   }
-  updatedProfile.fullName = fullName;
-  updatedProfile.address = address;
-  updatedProfile.phoneNumber = phoneNumber;
-  updatedProfile.bloodGroup = bloodGroup;
-  updatedProfile.emailId = emailId; 
+
+  profile.fullName = fullName;
+  profile.address = address;
+  profile.phoneNumber = phoneNumber;
+  profile.bloodGroup = bloodGroup;
+  profile.emailId = emailId; 
   
   try{
-    await Profile.save();
+    await profile.save();
   }catch(err){
     const error = new HttpError(
       'Something went wrong,couldnt update profile',500
@@ -69,7 +84,7 @@ const updateProfilebyUserId = async (req,res,next) => {
     return next(error);
   }
 
-  res.status(200).json({profile : updateProfile});
+  res.status(200).json({profile: (await profile).toObject({getters:true})});
 
 }
 
