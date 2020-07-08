@@ -1,6 +1,10 @@
 const { validationResult } = require('express-validator');
 
 const HttpError = require('../models/http-error');
+<<<<<<< HEAD
+
+
+=======
 
 const Profile = require('../models/profileSchema');
 
@@ -41,6 +45,7 @@ const createProfile = async (req,res,next) => {
 
   res.status(201).json({ profile: createdProfile });
 
+>>>>>>> 53213a887998ff5721c68dc0397e41fda954fdbd
 }
 
 const updateProfilebyId = async (req,res,next) => {

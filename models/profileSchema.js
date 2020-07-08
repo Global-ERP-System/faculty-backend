@@ -15,9 +15,18 @@ const profileSchema = new Schema({
   emailId:{type:String,required:true,unique:true},
   college:{type:String,required:true},
   experience:{type:String,required:true},
-  duration:{type:Number,required:true}
+  duration:{type:Number,required:true},
+  user : {
+    id : {
+      type : mongoose.Schema.Types.ObjectId;
+      ref : User
+    },
+    username : String,
+    email : String
+  }
+  
 
-})
+});
 
 profileSchema.plugin(uniqueValidator);
 
