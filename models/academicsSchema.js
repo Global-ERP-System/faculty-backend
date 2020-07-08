@@ -10,7 +10,7 @@ const academicsSchema = new Schema({
 <<<<<<< HEAD
       rollnos:[{type:String,unique:true}],
 =======
-      rollNos:[{type:Number,unique:true}],
+      rollNos:[{type:String,unique:true}],
 >>>>>>> a88460bb345e3e2bc10d4441695da0ba0e7ecbab
       present:[{type:Boolean,required:true}],
       absent:[{type:Boolean,required:true}]
@@ -19,13 +19,13 @@ const academicsSchema = new Schema({
 <<<<<<< HEAD
       rollnos:[{type:String,unique:true}],
 =======
-      rollNos:[{type:Number,unique:true}],
+      rollNos:[{type:String,unique:true}],
 >>>>>>> a88460bb345e3e2bc10d4441695da0ba0e7ecbab
       present:[{type:Boolean,required:true}],
       absent:[{type:Boolean,required:true}]
     },
     viewStudents:{
-      rollNos:[{type:Number,unique:true}],
+      rollNos:[{type:String,unique:true}],
       present:[{type:Boolean,required:true}],
       absent:[{type:Boolean,required:true}]
     }
