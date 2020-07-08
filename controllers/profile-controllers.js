@@ -83,6 +83,8 @@ const updateProfilebyId = async (req,res,next) => {
   let profile;
   try{
     profile = Profile.findById(profileId);
+    
+
   }catch(err){
     const error = new HttpError(
       'Something went wrong, couldnt update profile',500
@@ -97,7 +99,10 @@ const updateProfilebyId = async (req,res,next) => {
   profile.emailId = emailId; 
   
   try{
-    await profile.save();
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await profile.save({session:sess});
+    await sess.commitTransaction();
   }catch(err){
     const error = new HttpError(
       'Something went wrong,couldnt update profile',500
