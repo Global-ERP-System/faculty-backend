@@ -7,17 +7,25 @@ const academicsSchema = new Schema({
   // timeTable : {type:String},
   //rollnos will be attatched to principal database
     reglec:{
-      rollNos:[{type:Number,unique:true}],
+<<<<<<< HEAD
+      rollnos:[{type:String,unique:true}],
+=======
+      rollNos:[{type:String,unique:true}],
+>>>>>>> a88460bb345e3e2bc10d4441695da0ba0e7ecbab
       present:[{type:Boolean,required:true}],
       absent:[{type:Boolean,required:true}]
     },
     extralec:{
-      rollNos:[{type:Number,unique:true}],
+<<<<<<< HEAD
+      rollnos:[{type:String,unique:true}],
+=======
+      rollNos:[{type:String,unique:true}],
+>>>>>>> a88460bb345e3e2bc10d4441695da0ba0e7ecbab
       present:[{type:Boolean,required:true}],
       absent:[{type:Boolean,required:true}]
     },
     viewStudents:{
-      rollNos:[{type:Number,unique:true}],
+      rollNos:[{type:String,unique:true}],
       present:[{type:Boolean,required:true}],
       absent:[{type:Boolean,required:true}]
     }
