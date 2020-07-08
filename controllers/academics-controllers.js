@@ -21,7 +21,8 @@ const postAttendanceByRegLec = async (req,res,next) => {
   const {rollNos,present,absent} = req.body;
 
   const createRegLecture = new Academics({
-    regLec.rollNos = new Array(regLec.rollNos,rollNos),
+    
+    regLec.rollNos = [...regLec.rollNos,rollNos],
     regLec.present = new Array(regLec.present,present),
     regLec.absent = new Array(regLec.absent,absent),
   })
@@ -69,19 +70,50 @@ const postAttendanceByExtraLec = (req,res,next) => {
 const getAttendanceByViewStudents = (req,res,next) => {
   const vsaid = req.params.vsaid;
 
-  let presentdays = 0;
-  let absentdays =0; 
-  // Academics.viewStudents.present.find ((p) => {
-  //   if(p.value === true){
-  //     presentStudents +=1;
-  //   }else{
-  //     absentStudents +=1;
-  //   }
-  // })
+  const  {currentRegLecAttendance }= Academics.regLec;
+  const {currentExtraLecAttendance} = Academics.extraLec;
+  const  {currentAttendance }= Academics.viewStudents;
+
+  let presentDaysArrayRegLec = currentRegLecAttendance.present;
+  let presentDays = currentAttendance.presentDays;
+  let absentdays = currentAttendance.absentDays;
+
+  presentDaysArrayRegLec .map( p => {
+    if(p.value === true){
+      presentDays +=1;
+    }else{
+      absentStudents +=1;
+    }
+  })
+
+  let presentDaysArrayExtraLec = currentExtraLecAttendance.present;
+  presentDaysArrayExtraLec.map( p => {
+    if(p.value === true){
+      presentDays +=1;
+    }else{
+      absentStudents +=1;
+    }
+  })
+
+  currentAttendance.presentDays = presentDays;
+  currentAttendance.absentDays = absentDays;
+  currentAttendance.attendance = Math.floor((presentdays)*(100)/(presentdays + absentdays));
+
+  try{
+    await currentAttendance.save();
+  }catch(err){
+    const error = new HttpError(
+      'fetching attendance failed, please try agian later.',
+      500
+    );
+    return next(error);
+  }
+  res.status(200).json({currentAttendance : currentAttendance});
+    
+}
 
   // let attendance = 0;
 
-};
 // const getTimeTable = (req,res,next)=>{
 
 // };
