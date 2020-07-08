@@ -18,8 +18,8 @@ const academicsSchema = new Schema({
     },
     viewStudents:{
       rollnos:[{type:Number,unique:true}],
-      present:[{type:Number,required:true}],
-      absent:[{type:Number,required:true}]
+      present:[{type:Boolean,required:true}],
+      absent:[{type:Boolean,required:true}]
     }
 })
 

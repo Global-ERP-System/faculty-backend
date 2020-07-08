@@ -3,7 +3,7 @@ const { validationResult } = require('express-validator');
 const HttpError = require('../models/http-error');
 
 const createProfile = (req,res,next) => {
-
+  
 }
 
 const updateProfile = async (req,res,next) => {
