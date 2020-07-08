@@ -10,7 +10,7 @@ const HttpError = require('./models/http-error');
 app.use(bodyParser.json());
 
 app.use('/api/faculty/academics',academicsRoutes);
-app.use('/api/faculty/prfile',profileRoutes);
+app.use('/api/faculty/profile',profileRoutes);
 // app.use((req,res,next) => {
 //     const error = new HttpError('couldnt find this route',404);
 //     throw error;
