@@ -5,19 +5,19 @@ const Schema = moongoose.Schema;
 
 const academicsSchema = new Schema({
   // timeTable : {type:String},
-  
+  //rollnos will be attatched to principal database
     reglec:{
-      rollnos:[{type:Number,unique:true}],
+      rollNos:[{type:Number,unique:true}],
       present:[{type:Boolean,required:true}],
       absent:[{type:Boolean,required:true}]
     },
     extralec:{
-      rollnos:[{type:Number,unique:true}],
+      rollNos:[{type:Number,unique:true}],
       present:[{type:Boolean,required:true}],
       absent:[{type:Boolean,required:true}]
     },
     viewStudents:{
-      rollnos:[{type:Number,unique:true}],
+      rollNos:[{type:Number,unique:true}],
       present:[{type:Boolean,required:true}],
       absent:[{type:Boolean,required:true}]
     }
