@@ -74,13 +74,13 @@ const postAttendanceByExtraLec = async (req,res,next) => {
     await createExtraLecture.save();
   }catch(err){
     const error = new HttpError(
-      'creating reg lec failed,please try again',
+      'creating extra lec failed,please try again',
       500
     );
     return next(error);
   }
   
-  res.status(201).json({extraLec:createExtLecture.toObject({getters:true})});
+  res.status(201).json({extraLec:createExtraLecture.toObject({getters:true})});
 };
 
 const getAttendanceByViewStudents = async (req,res,next) => {
