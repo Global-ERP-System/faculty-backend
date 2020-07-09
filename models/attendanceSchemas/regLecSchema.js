@@ -5,9 +5,9 @@ const Schema = mongoose.Schema;
 
 const regLecSchema = new Schema({
     regLec:{
-        rollNos:[{type:String}],
-        present:[{type:String}],
-        absent:[{type:String}]
+        rollNos:[{type:Boolean}],
+        present:[{type:Boolean}],
+        absent:[{type:Boolean}]
     },
     date:{type:String}
     
