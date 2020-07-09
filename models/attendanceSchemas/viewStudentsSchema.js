@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-
 const Schema = mongoose.Schema;
 
 const viewStudentsSchema = new Schema({
@@ -10,6 +9,5 @@ const viewStudentsSchema = new Schema({
     attendance:[{type:Number,required:true}],
     date:{type:String}
 });
-
 
 module.exports = mongoose.model('ViewStudent',viewStudentsSchema);
