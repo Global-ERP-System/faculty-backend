@@ -6,8 +6,8 @@ const getTimetableById = async (req,res,next)=>{
     let timetable;
     try {
          timetable = await Timetable.find(t=> t.date === timetableId);
-    } catch (error) {
-        const error = new HttpError(
+    } catch (err) {
+       const  error = new HttpError(
             'getting timtable failed,please try again',
             500
           );
