@@ -86,9 +86,9 @@ const postAttendanceByExtraLec = async (req,res,next) => {
 const getAttendanceByViewStudents = async (req,res,next) => {
   const dateId = req.params.dateId;
 
-  let attendance;
+  let regLecAttendance;
   try{
-    attendance = await Academics.find(a =>a.date === dateId); 
+    regLecAttendance = await regLecSchema.find(a =>a.date === dateId); 
   }catch(err){
     const error = new HttpError(
       'getting attendance failed,please try again',
@@ -97,11 +97,18 @@ const getAttendanceByViewStudents = async (req,res,next) => {
     return next(error);
   }
 
-  const  {currentRegLecAttendance }= attendance.regLec;
-  const {currentExtraLecAttendance} = attendance.extraLec;
-  const  {currentAttendance }= attendance.viewStudents;
+  let currentAttendance;
+  try{
+    currentAttendance = await viewStudentsSchema.find(a => a.date === dateId);
+  }catch(err){
+    const error = new HttpError(
+      'getting attendance failed,please try again',
+      500
+    );
+    return next(error);
+  }
 
-  let presentDaysArrayRegLec = currentRegLecAttendance.present;
+  const { presentDaysArrayRegLec} = regLecAttendance.present;
   let presentDays = currentAttendance.presentDays;
   let absentDays = currentAttendance.absentDays;
 
@@ -113,7 +120,19 @@ const getAttendanceByViewStudents = async (req,res,next) => {
     }
   })
 
-  let presentDaysArrayExtraLec = currentExtraLecAttendance.present;
+  let extraLecAttendance;
+  try{
+    extraLecAttendance = await extraLecSchema.find(a =>a.date === dateId); 
+  }catch(err){
+    const error = new HttpError(
+      'getting attendance failed,please try again',
+      500
+    );
+    return next(error);
+  }
+
+  const {presentDaysArrayExtraLec} = extraLecAttendance.present;
+
   presentDaysArrayExtraLec.map( p => {
     if(p.value === true){
       presentDays +=1;
@@ -127,7 +146,7 @@ const getAttendanceByViewStudents = async (req,res,next) => {
   currentAttendance.attendance = Math.floor((presentdays)*(100)/(presentdays + absentdays));
 
   try{
-    await attendance.save();
+    await currentAttendance.save();
   }catch(err){
     const error = new HttpError(
       'fetching attendance failed, please try agian later.',
@@ -135,7 +154,7 @@ const getAttendanceByViewStudents = async (req,res,next) => {
     );
     return next(error);
   }
-  res.status(200).json({attendance:attendance});
+  res.status(200).json({attendance:currentAttendance});
     
 }
 
