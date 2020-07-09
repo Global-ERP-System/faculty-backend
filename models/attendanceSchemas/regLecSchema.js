@@ -4,10 +4,13 @@ const uniqueValidator = require('mongoose-unique-validator');
 const Schema = mongoose.Schema;
 
 const regLecSchema = new Schema({
-    rollNos:[{type:String,unique:true,required:true}],
-    present:[{type:Boolean,required:true}],
-    absent:[{type:Boolean,required:true}],
+    regLec:{
+        rollNos:[{type:String,required:true}],
+        present:[{type:String,required:true}],
+        absent:[{type:String,required:true}]
+    },
     date:{type:String}
+    
 });
 
 regLecSchema.plugin(uniqueValidator)
