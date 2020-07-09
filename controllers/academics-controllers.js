@@ -13,7 +13,7 @@ const viewStudentsSchema = require('../models/attendanceSchemas/viewStudentsSche
 // }
 
 
-const postAttendanceByRegLec = async (req,res,next) => {
+const postAttendanceByRegLec =  async (req,res,next) => {
 
   // const errors= validationResult(req);
   // if(!errors.isEmpty()){
@@ -35,16 +35,26 @@ const postAttendanceByRegLec = async (req,res,next) => {
     regLec:regLec,
     date : dateStr
   })
-  try{
-    await createRegLecture.save();
-  }catch(err){
-    const error = new HttpError(
-      'creating reg lec failed,please try again',
-      500
-    );
-    return next(error);
-  }
-  
+  let newRegLect;
+  // try{
+  //   // console.log(createRegLecture);
+  //    newRegLect = await createRegLecture.save();
+  //   console.log(createRegLecture);
+  // }catch(err){
+  //   const error = new HttpError(
+  //     'creating reg lec failed,please try again',
+  //     500
+  //   );
+  //   return next(error);
+  // }
+  createRegLecture.save()
+  .then(function( data) {
+    console.log(data);
+    
+})
+.catch(function(error){
+ console.log(error);
+});
   res.status(201).json({regLec:createRegLecture.toObject({getters:true})});
 };
 
