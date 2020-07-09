@@ -29,12 +29,14 @@ const userSignUpController = async (req,res,next)=>{
   
 }
 
-const userLoginController =  passport.authenticate('local',{
-    successRedirect : '',
-    failureRedirect : ''
-}) ,
-(req,res,next)=>{
+// const userLoginController = ()=> passport.authenticate('local',{
+//     successRedirect : '',
+//     failureRedirect : ''
+// }),
+// (req,res,next)=>{
 
-}
+// }
+
 
 exports.userSignUpController = userSignUpController;
+exports.userLoginController = userLoginController;

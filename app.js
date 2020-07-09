@@ -14,7 +14,7 @@ const userRoutes = require('./routes/user-routes');
 
 app.use('/api/faculty/academics',academicsRoutes);
 app.use('/api/faculty/profile',profileRoutes);
-app.use('/api/faculty/users',userRoutes);
+// app.use('/api/faculty/users',userRoutes);
 
 
 app.use((error,req,res,next) => {
@@ -25,9 +25,9 @@ app.use((error,req,res,next) => {
 });
 
 
-
+// 'mongodb+srv://rohan:qkLzF0DOjiTxbVA3@cluster0-ri8lk.mongodb.net/facultyWireFrame?retryWrites=true&w=majority' ||
 mongoose
-    .connect('mongodb+srv://rohan:qkLzF0DOjiTxbVA3@cluster0-ri8lk.mongodb.net/facultyWireFrame?retryWrites=true&w=majority',
+    .connect('mongodb+srv://rohan:qkLzF0DOjiTxbVA3@cluster0-ri8lk.mongodb.net/facultyWireFrame?retryWrites=true&w=majority' ||'mongodb://localhost/faculty',
     { useNewUrlParser: true, useUnifiedTopology: true,useCreateIndex: true  })
     .then(() => {
         app.listen( 5000, ()=>{
