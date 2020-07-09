@@ -1,4 +1,4 @@
-const { validationResult } = require('express-validator');
+//const { validationResult } = require('express-validator');
 
 const HttpError = require('../models/http-error');
 
@@ -15,12 +15,12 @@ const viewStudentsSchema = require('../models/attendanceSchemas/viewStudentsSche
 
 const postAttendanceByRegLec = async (req,res,next) => {
 
-  const errors= validationResult(req);
-  if(!errors.isEmpty()){
-    return next(
-      new HttpError('Invalid inputs passed , please check your data ',422)
-    );
-  }
+  // const errors= validationResult(req);
+  // if(!errors.isEmpty()){
+  //   return next(
+  //     new HttpError('Invalid inputs passed , please check your data ',422)
+  //   );
+  // }
   const {regLec} = req.body;
 
   const  d = new Date();
@@ -49,12 +49,12 @@ const postAttendanceByRegLec = async (req,res,next) => {
 };
 
 const postAttendanceByExtraLec = async (req,res,next) => {
-  const errors= validationResult(req);
-  if(!errors.isEmpty()){
-    return next(
-      new HttpError('Invalid inputs passed , please check your data ',422)
-    );
-  }
+  // const errors= validationResult(req);
+  // if(!errors.isEmpty()){
+  //   return next(
+  //     new HttpError('Invalid inputs passed , please check your data ',422)
+  //   );
+  // }
   const {extraLec} = req.body;
 
   const  d = new Date();
