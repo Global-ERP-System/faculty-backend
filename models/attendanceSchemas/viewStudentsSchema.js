@@ -8,7 +8,7 @@ const viewStudentsSchema = new Schema({
     presentDays:[{type:Number}],
     absentDays:[{type:Number}],
     attendance:[{type:Number}],
-    date:{type:String}
+    // date:{type:String}
 });
 
 
