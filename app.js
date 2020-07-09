@@ -15,12 +15,7 @@ const userRoutes = require('./routes/user-routes');
 app.use('/api/faculty/academics',academicsRoutes);
 app.use('/api/faculty/profile',profileRoutes);
 app.use('/api/faculty/users',userRoutes);
-<<<<<<< HEAD
-// app.use((req,res,next) => {
-//     const error = new HttpError('couldnt find this route',404);
-//     throw error;
-// });
-=======
+
 
 app.use((error,req,res,next) => {
     if(res.headerSent){
@@ -28,7 +23,7 @@ app.use((error,req,res,next) => {
     }
     res.status(error.code || 500).json({message :error.message || 'An unknown error occured!' });
 });
->>>>>>> fd056af2a304fcef85984a66fe83e1a7a9fa9ea3
+
 
 
 mongoose

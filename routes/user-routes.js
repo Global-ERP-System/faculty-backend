@@ -1,5 +1,5 @@
 const express = require('express'),
-router = express.router();
+router = express.Router();
 const userController = require('../controllers/user-controllers'),
 User = require('../models/userSchema');
 
