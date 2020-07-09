@@ -1,8 +1,10 @@
-const { validationResult } = require('express-validator');
+//const { validationResult } = require('express-validator');
 
 const HttpError = require('../models/http-error');
 
-const Academics = require('../models/academicsSchema');
+const regLecSchema = require('../models/attendanceSchemas/regLecSchema');
+const extraLecSchema = require('../models/attendanceSchemas/extraLecSchema');
+const viewStudentsSchema = require('../models/attendanceSchemas/viewStudentsSchema');
 
 //get the rollnos as soon as class 6E is clicked
 // const getrollNos =(req,res,next) =>{
@@ -13,13 +15,13 @@ const Academics = require('../models/academicsSchema');
 
 const postAttendanceByRegLec = async (req,res,next) => {
 
-  const errors= validationResult(req);
-  if(!errors.isEmpty()){
-    return next(
-      new HttpError('Invalid inputs passed , please check your data ',422)
-    );
-  }
-  const {rollNos,present,absent} = req.body;
+  // const errors= validationResult(req);
+  // if(!errors.isEmpty()){
+  //   return next(
+  //     new HttpError('Invalid inputs passed , please check your data ',422)
+  //   );
+  // }
+  const {regLec} = req.body;
 
   const  d = new Date();
  
@@ -27,15 +29,11 @@ const postAttendanceByRegLec = async (req,res,next) => {
   const  month = d.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
   const  year = d.getFullYear();
  
-  const  dateStr = date + "/" + month + "/" + year;
+  const  dateStr = date  + "-" + month + "-"  + year;
 
-  const createRegLecture = new Academics({
-    
-    date: {regLec :{rollNos: rollNos}},//.regLec.rollNos = new Array(date.regLec.rollNos,rollNos),
-    date:{regLec : {present: present}},//.regLec.present = new Array(date.regLec.present,present),
-    date:{regLec:{absent:absent}},//.regLec.absent = new Array(date.regLec.absent,absent),
+  const createRegLecture = new regLecSchema({
+    regLec:regLec,
     date : dateStr
-
   })
   try{
     await createRegLecture.save();
@@ -47,17 +45,17 @@ const postAttendanceByRegLec = async (req,res,next) => {
     return next(error);
   }
   
-  res.status(201).json({regLec:createRegLecture});
+  res.status(201).json({regLec:createRegLecture.toObject({getters:true})});
 };
 
 const postAttendanceByExtraLec = async (req,res,next) => {
-  const errors= validationResult(req);
-  if(!errors.isEmpty()){
-    return next(
-      new HttpError('Invalid inputs passed , please check your data ',422)
-    );
-  }
-  const {rollNos,present,absent} = req.body;
+  // const errors= validationResult(req);
+  // if(!errors.isEmpty()){
+  //   return next(
+  //     new HttpError('Invalid inputs passed , please check your data ',422)
+  //   );
+  // }
+  const {extraLec} = req.body;
 
   const  d = new Date();
  
@@ -65,12 +63,10 @@ const postAttendanceByExtraLec = async (req,res,next) => {
   const  month = d.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
   const  year = d.getFullYear();
  
-  const  dateStr = date + "/" + month + "/" + year;
+  const  dateStr = date  + "-" + month + "-"  + year;
 
-  const createExtraLecture = new Academics({
-    date: {regLec :{rollNos: rollNos}},//.regLec.rollNos = new Array(date.regLec.rollNos,rollNos),
-    date:{regLec : {present: present}},//.regLec.present = new Array(date.regLec.present,present),
-    date:{regLec:{absent:absent}},//.regLec.absent = new Array(date.regLec.absent,absent),
+  const createExtraLecture = new extraLecSchema({
+    extraLec: extraLec,
     date : dateStr
   })
 
@@ -78,21 +74,21 @@ const postAttendanceByExtraLec = async (req,res,next) => {
     await createExtraLecture.save();
   }catch(err){
     const error = new HttpError(
-      'creating reg lec failed,please try again',
+      'creating extra lec failed,please try again',
       500
     );
     return next(error);
   }
   
-  res.status(201).json({regLec:createExtLecture});
+  res.status(201).json({extraLec:createExtraLecture.toObject({getters:true})});
 };
 
 const getAttendanceByViewStudents = async (req,res,next) => {
   const dateId = req.params.dateId;
 
-  let attendance;
+  let regLecAttendance;
   try{
-    attendance = await Academics.find(a =>a.date === dateId); 
+    regLecAttendance = await regLecSchema.find(a =>a.date === dateId); 
   }catch(err){
     const error = new HttpError(
       'getting attendance failed,please try again',
@@ -101,28 +97,47 @@ const getAttendanceByViewStudents = async (req,res,next) => {
     return next(error);
   }
 
-  const  {currentRegLecAttendance }= attendance.regLec;
-  const {currentExtraLecAttendance} = attendance.extraLec;
-  const  {currentAttendance }= attendance.viewStudents;
+  let currentAttendance;
+  try{
+    currentAttendance = await viewStudentsSchema.find(a => a.date === dateId);
+  }catch(err){
+    const error = new HttpError(
+      'getting attendance failed,please try again',
+      500
+    );
+    return next(error);
+  }
 
-  let presentDaysArrayRegLec = currentRegLecAttendance.present;
+  const { presentDaysArrayRegLec} = regLecAttendance.present;
   let presentDays = currentAttendance.presentDays;
-  let absentdays = currentAttendance.absentDays;
+  let absentDays = currentAttendance.absentDays;
 
   presentDaysArrayRegLec .map( p => {
     if(p.value === true){
       presentDays +=1;
     }else{
-      absentStudents +=1;
+      absentDays +=1;
     }
   })
 
-  let presentDaysArrayExtraLec = currentExtraLecAttendance.present;
+  let extraLecAttendance;
+  try{
+    extraLecAttendance = await extraLecSchema.find(a =>a.date === dateId); 
+  }catch(err){
+    const error = new HttpError(
+      'getting attendance failed,please try again',
+      500
+    );
+    return next(error);
+  }
+
+  const {presentDaysArrayExtraLec} = extraLecAttendance.present;
+
   presentDaysArrayExtraLec.map( p => {
     if(p.value === true){
       presentDays +=1;
     }else{
-      absentStudents +=1;
+      absentDays +=1;
     }
   })
 
@@ -139,7 +154,7 @@ const getAttendanceByViewStudents = async (req,res,next) => {
     );
     return next(error);
   }
-  res.status(200).json({currentAttendance : currentAttendance});
+  res.status(200).json({attendance:currentAttendance});
     
 }
 

@@ -12,10 +12,10 @@ const router = express.Router();
 
 router.post('/attendance/regLec',academicsControllers.postAttendanceByRegLec);
 
-router.post('/attendance/extraLec',academicsControllers.postAttendanceByRegLec);
+router.post('/attendance/extraLec',academicsControllers.postAttendanceByExtraLec);
 
 //vsaid: view studnets attendance id
-router.get('/attendance/viewStudents/:dateId',academicsControllers.postAttendanceByRegLec);
+router.get('/attendance/viewStudents/:dateId',academicsControllers.getAttendanceByViewStudents);
 
 
 module.exports = router;

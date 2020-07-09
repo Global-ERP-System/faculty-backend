@@ -65,7 +65,7 @@ const createProfile = async (req,res,next) => {
     return next(error);
   }
 
-  res.status(201).json({ profile: createdProfile });
+  res.status(201).json({ profile: createdProfile.toObject({getters:true}) });
 
 }
 
