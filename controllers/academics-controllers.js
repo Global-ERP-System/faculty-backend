@@ -19,7 +19,7 @@ const postAttendanceByRegLec = async (req,res,next) => {
       new HttpError('Invalid inputs passed , please check your data ',422)
     );
   }
-  const {rollNos,present,absent} = req.body;
+  const {regLec} = req.body;
 
   const  d = new Date();
  
@@ -30,12 +30,8 @@ const postAttendanceByRegLec = async (req,res,next) => {
   const  dateStr = date  + "-" + month + "-"  + year;
 
   const createRegLecture = new Academics({
-    
-    date: {regLec :{rollNos: rollNos}},//.regLec.rollNos = new Array(date.regLec.rollNos,rollNos),
-    date:{regLec : {present: present}},//.regLec.present = new Array(date.regLec.present,present),
-    date:{regLec:{absent:absent}},//.regLec.absent = new Array(date.regLec.absent,absent),
+    regLec:regLec,
     date : dateStr
-
   })
   try{
     await createRegLecture.save();
@@ -57,7 +53,7 @@ const postAttendanceByExtraLec = async (req,res,next) => {
       new HttpError('Invalid inputs passed , please check your data ',422)
     );
   }
-  const {rollNos,present,absent} = req.body;
+  const {extraLec} = req.body;
 
   const  d = new Date();
  
@@ -68,9 +64,7 @@ const postAttendanceByExtraLec = async (req,res,next) => {
   const  dateStr = date  + "-" + month + "-"  + year;
 
   const createExtraLecture = new Academics({
-    date: {regLec :{rollNos: rollNos}},
-    date:{regLec : {present: present}},
-    date:{regLec:{absent:absent}},
+    extraLec: extraLec,
     date : dateStr
   })
 
