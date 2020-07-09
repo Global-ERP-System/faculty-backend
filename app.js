@@ -4,9 +4,10 @@ const mongoose = require('mongoose');
 const app = express();
 app.use(bodyParser.json());
 
+const HttpError = require('./models/http-error');
+
 const academicsRoutes = require('./routes/academics-routes');
 const profileRoutes = require('./routes/profile-routes');
-const HttpError = require('./models/http-error');
 
 app.use('/api/faculty/academics',academicsRoutes);
 app.use('/api/faculty/profile',profileRoutes);

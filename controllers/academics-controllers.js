@@ -2,7 +2,9 @@ const { validationResult } = require('express-validator');
 
 const HttpError = require('../models/http-error');
 
-const Academics = require('../models/academicsSchema');
+const regLecSchema = require('../models/attendanceSchemas/regLecSchema');
+const extraLecSchema = require('../models/attendanceSchemas/extraLecSchema');
+const viewStudentsSchema = require('../models/attendanceSchemas/viewStudentsSchema');
 
 //get the rollnos as soon as class 6E is clicked
 // const getrollNos =(req,res,next) =>{
@@ -29,7 +31,7 @@ const postAttendanceByRegLec = async (req,res,next) => {
  
   const  dateStr = date  + "-" + month + "-"  + year;
 
-  const createRegLecture = new Academics({
+  const createRegLecture = new regLecSchema({
     regLec:regLec,
     date : dateStr
   })
@@ -63,7 +65,7 @@ const postAttendanceByExtraLec = async (req,res,next) => {
  
   const  dateStr = date  + "-" + month + "-"  + year;
 
-  const createExtraLecture = new Academics({
+  const createExtraLecture = new extraLecSchema({
     extraLec: extraLec,
     date : dateStr
   })
@@ -78,7 +80,7 @@ const postAttendanceByExtraLec = async (req,res,next) => {
     return next(error);
   }
   
-  res.status(201).json({regLec:createExtLecture.toObject({getters:true})});
+  res.status(201).json({extraLec:createExtLecture.toObject({getters:true})});
 };
 
 const getAttendanceByViewStudents = async (req,res,next) => {
