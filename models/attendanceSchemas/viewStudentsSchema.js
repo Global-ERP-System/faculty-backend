@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 
 const viewStudentsSchema = new Schema({
     rollNos:[{type:String,unique:true,required:true}],
-    presentDays:[{type:Number,required:true}],
-    absentDays:[{type:Number,required:true}],
-    attendance:[{type:Number,required:true}],
+    presentDaysArray:[{type:Number,required:true,default:0}],
+    absentDaysArray:[{type:Number,required:true,default:0}],
+    attendanceArray:[{type:Number,required:true,default:0}],
     date:{type:String}
 });
 

@@ -5,6 +5,7 @@ const HttpError = require('../models/http-error');
 const regLecSchema = require('../models/attendanceSchemas/regLecSchema');
 const extraLecSchema = require('../models/attendanceSchemas/extraLecSchema');
 const viewStudentsSchema = require('../models/attendanceSchemas/viewStudentsSchema');
+const { create } = require('../models/attendanceSchemas/regLecSchema');
 
 //get the rollnos as soon as class 6E is clicked
 // const getrollNos =(req,res,next) =>{
@@ -30,6 +31,8 @@ const postAttendanceByRegLec =  async (req,res,next) => {
   const  year = d.getFullYear();
  
   const  dateStr = date  + "-" + month + "-"  + year;
+
+  let presentDays = 0;
 
   const createRegLecture = new regLecSchema({
     regLec:regLec,
@@ -80,15 +83,24 @@ const postAttendanceByExtraLec = async (req,res,next) => {
     date : dateStr
   })
 
-  try{
-    await createExtraLecture.save();
-  }catch(err){
-    const error = new HttpError(
-      'creating extra lec failed,please try again',
-      500
-    );
-    return next(error);
-  }
+  // try{
+  //   await createExtraLecture.save();
+  // }catch(err){
+  //   const error = new HttpError(
+  //     'creating extra lec failed,please try again',
+  //     500
+  //   );
+  //   return next(error);
+  // }
+
+  createExtraLecture.save()
+  .then(function( data) {
+    console.log(data);
+    
+})
+.catch(function(error){
+ console.log(error);
+});
   
   res.status(201).json({extraLec:createExtraLecture.toObject({getters:true})});
 };
@@ -98,7 +110,7 @@ const getAttendanceByViewStudents = async (req,res,next) => {
 
   let regLecAttendance;
   try{
-    regLecAttendance = await regLecSchema.find(a =>a.date === dateId); 
+    regLecAttendance = await regLecSchema.find({date : dateId});//a.date === dateId); 
   }catch(err){
     const error = new HttpError(
       'getting attendance failed,please try again',
@@ -106,33 +118,51 @@ const getAttendanceByViewStudents = async (req,res,next) => {
     );
     return next(error);
   }
-
-  let currentAttendance;
-  try{
-    currentAttendance = await viewStudentsSchema.find(a => a.date === dateId);
-  }catch(err){
-    const error = new HttpError(
-      'getting attendance failed,please try again',
-      500
-    );
-    return next(error);
-  }
-
-  const { presentDaysArrayRegLec} = regLecAttendance.present;
-  let presentDays = currentAttendance.presentDays;
-  let absentDays = currentAttendance.absentDays;
-
-  presentDaysArrayRegLec .map( p => {
-    if(p.value === true){
-      presentDays +=1;
-    }else{
-      absentDays +=1;
-    }
+// // console.log(regLecAttendance);
+//   let currentAttendance;
+//   try{
+//     currentAttendance = await viewStudentsSchema.find({date : dateId});
+//   }catch(err){
+//     const error = new HttpError(
+//       'getting attendance failed,please try again',
+//       500
+//     );
+//     return next(error);
+//   }
+//   // console.log(currentAttendance);
+//   console.log(currentAttendance.presentDaysArray);
+  
+  // const presentDaysArrayRegLec = regLecAttendance.present;
+  // let presentDays = currentAttendance.presentDaysArray;
+  // let absentDays = currentAttendance.absentDaysArray;
+  // console.log(regLecAttendance.present);
+  // console.log( regLecAttendance[0].regLec.present);
+  
+  // regLecAttendance.regLec.present.map( p => {
+  //   if(p.value === true){
+  //     presentDays +=1;
+  //   }else{
+  //     absentDays +=1;
+  //   }
+  // })
+var presentDays=0;
+var absentDays=0;
+var presentDaysArray = [];
+  regLecAttendance.map(r=>{
+    r.regLec.present.map( p => {
+        if(p === true){
+          presentDays+=1;
+        }else{
+          absentDays +=1;
+        }
+      })
   })
+  // console.log('value',presentDays);
+  
 
   let extraLecAttendance;
   try{
-    extraLecAttendance = await extraLecSchema.find(a =>a.date === dateId); 
+    extraLecAttendance = await extraLecSchema.find({date : dateId}); 
   }catch(err){
     const error = new HttpError(
       'getting attendance failed,please try again',
@@ -141,15 +171,19 @@ const getAttendanceByViewStudents = async (req,res,next) => {
     return next(error);
   }
 
-  const {presentDaysArrayExtraLec} = extraLecAttendance.present;
+  // const {presentDaysArrayExtraLec} = extraLecAttendance.present;
 
-  presentDaysArrayExtraLec.map( p => {
-    if(p.value === true){
-      presentDays +=1;
-    }else{
-      absentDays +=1;
-    }
+  extraLecAttendance.map(e=>{
+    e.extraLec.present.map( p => {
+        if(p === true){
+          presentDays+=1;
+        }else{
+          absentDays +=1;
+        }
+      })
   })
+
+  console.log(presentdays);
 
   currentAttendance.presentDays = presentDays;
   currentAttendance.absentDays = absentDays;
