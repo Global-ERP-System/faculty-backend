@@ -1,5 +1,7 @@
 const express = require('express');
-const bodyParser =require('body-parser');
+const bodyParser =require('body-parser'),
+passport    =   require('passport'),
+    localStrategy=  require('passport-local');
 const mongoose = require('mongoose');
 const app = express();
 app.use(bodyParser.json());
@@ -8,9 +10,12 @@ const HttpError = require('./models/http-error');
 
 const academicsRoutes = require('./routes/academics-routes');
 const profileRoutes = require('./routes/profile-routes');
+const userRoutes = require('./routes/user-routes');
 
 app.use('/api/faculty/academics',academicsRoutes);
 app.use('/api/faculty/profile',profileRoutes);
+app.use('/api/faculty/users',userRoutes);
+
 
 app.use((error,req,res,next) => {
     if(res.headerSent){
@@ -18,6 +23,7 @@ app.use((error,req,res,next) => {
     }
     res.status(error.code || 500).json({message :error.message || 'An unknown error occured!' });
 });
+
 
 
 mongoose
