@@ -1,30 +1,9 @@
 const express = require('express'),
 router = express.Router();
-const userController = require('../controllers/user-controllers'),
-User = require('../models/userSchema');
+const userControllers = require('../controllers/user-controllers');
 
+router.post('/signUp', userControllers.signup);
 
-
-// Passport Configuration
-router.use(require('express-session')({
-    secret:"Damn it's nothing",
-    resave : false,
-    saveUninitialized: false
-}));
-router.use(passport.initialize());
-router.use(passport.session());
-passport.use(new localStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-router.use((req,res,next)=>{
-    res.locals.currentUser = req.user;
-    next();
-});
-
-// Routes
-router.post('/signUp', userController.userSignUpController);
-
-router.get('/login',userController.userLoginController);
-
+router.post('/login',userControllers.login);
 
 module.exports =router;

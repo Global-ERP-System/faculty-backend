@@ -158,13 +158,10 @@ const getAttendanceByViewStudents = async (req,res,next) => {
     
 }
 
-  // let attendance = 0;
-
 // const getTimeTable = (req,res,next)=>{
 
 // };
 
-// exports.getrollNos = getrollNos;
 exports.postAttendanceByRegLec = postAttendanceByRegLec;
 exports.postAttendanceByExtraLec = postAttendanceByExtraLec;
 exports.getAttendanceByViewStudents =getAttendanceByViewStudents;

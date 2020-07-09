@@ -1,4 +1,4 @@
-const { validationResult } = require('express-validator');
+ const { validationResult } = require('express-validator');
 
 const HttpError = require('../models/http-error');
 
@@ -20,7 +20,7 @@ const createProfile = async (req,res,next) => {
   }= req.body;
 
   const createdProfile = new Profile({
-    image : 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/400px-Empire_State_Building_%28aerial_view%29.jpg',
+    image :  'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/400px-Empire_State_Building_%28aerial_view%29.jpg',//req.file.path,
     fullName,
     address,
     registrationNumber,
