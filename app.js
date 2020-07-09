@@ -2,19 +2,21 @@ const express = require('express');
 const bodyParser =require('body-parser');
 const mongoose = require('mongoose');
 const app = express();
+app.use(bodyParser.json());
 
 const academicsRoutes = require('./routes/academics-routes');
 const profileRoutes = require('./routes/profile-routes');
 const HttpError = require('./models/http-error');
 
-app.use(bodyParser.json());
-
 app.use('/api/faculty/academics',academicsRoutes);
 app.use('/api/faculty/profile',profileRoutes);
-// app.use((req,res,next) => {
-//     const error = new HttpError('couldnt find this route',404);
-//     throw error;
-// });
+
+app.use((error,req,res,next) => {
+    if(res.headerSent){
+        return next (error);
+    }
+    res.status(error.code || 500).json({message :error.message || 'An unknown error occured!' });
+});
 
 
 mongoose
