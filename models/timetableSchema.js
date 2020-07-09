@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-const timetableSchema = new mongoose.Schema({
+const Schema = mongoose.Schema;
+
+const timetableSchema = new Schema({
     subject : [{ type : String,required : true}][{type : String,required : true}],
     date : {type: String}
 })

@@ -1,25 +1,25 @@
- const { validationResult } = require('express-validator');
+//  const { validationResult } = require('express-validator');
 
 const HttpError = require('../models/http-error');
 
-const Profile = require('../models/profileSchema');
-const User = require('../models/userSchema');
+const profileSchema = require('../models/profileSchema');
+const userSchema = require('../models/userSchema');
 const  mongoose  = require('mongoose');
 
 const createProfile = async (req,res,next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
+  // const errors = validationResult(req);
+  // if (!errors.isEmpty()) {
 
-    return next(
-      new HttpError('Invalid inputs passed, please check your data.', 422)
-    );
-  }
+  //   return next(
+  //     new HttpError('Invalid inputs passed, please check your data.', 422)
+  //   );
+  // }
   //should include image also
   const {
     fullName,address,registrationNumber,phoneNumber,bloodGroup,campusCode,emailId,college,experience,duration,creator
   }= req.body;
 
-  const createdProfile = new Profile({
+  const createdProfile = new profileSchema({
     image :  'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/400px-Empire_State_Building_%28aerial_view%29.jpg',//req.file.path,
     fullName,
     address,
@@ -37,7 +37,7 @@ const createProfile = async (req,res,next) => {
   let user;
   
   try{
-    user = await User.findById(creator);
+    user = await userSchema.findById(creator);
   }catch(err){
     const error= new HttpError(
       'creating user failed,please try again',500
