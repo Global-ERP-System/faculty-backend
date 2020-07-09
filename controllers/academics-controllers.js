@@ -88,7 +88,7 @@ const getAttendanceByViewStudents = async (req,res,next) => {
 
   let regLecAttendance;
   try{
-    regLecAttendance = await regLecSchema.find(a =>console.log(a));//a.date === dateId); 
+    regLecAttendance = await regLecSchema.find(a =>a.date === dateId); 
   }catch(err){
     const error = new HttpError(
       'getting attendance failed,please try again',
