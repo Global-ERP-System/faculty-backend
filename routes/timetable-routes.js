@@ -1,12 +1,12 @@
-const express = require('express'),
-router = express.Router(),
-timetableController = require('../controllers/timetable-controllers');
+// const express = require('express'),
+// router = express.Router(),
+// timetableController = require('../controllers/timetable-controllers');
 
 
 
-router.get('/',timetableController);
+// router.get('/',timetableController);
 
 
 
 
-module.exports = router;
+// module.exports = router;

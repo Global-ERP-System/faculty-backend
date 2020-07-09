@@ -20,7 +20,7 @@ timetableRoutes = require('./routes/timetable-routes');
 
 app.use('/api/faculty/academics',academicsRoutes);
 app.use('/api/faculty/profile',profileRoutes);
-app.use('api/faculty/academics/timetable',timetableRoutes);
+// app.use('api/faculty/academics/timetable',timetableRoutes);
 // app.use('/api/faculty/users',userRoutes);
 
 
@@ -39,7 +39,7 @@ app.use((error,req,res,next) => {
 //.connect('mongodb+srv://rohan:qkLzF0DOjiTxbVA3@cluster0-ri8lk.mongodb.net/facultyWireFrame?retryWrites=true&w=majority'
 
 mongoose
-    .connect('mongodb+srv://rohan:qkLzF0DOjiTxbVA3@cluster0-ri8lk.mongodb.net/facultyWireFrame?retryWrites=true&w=majority', 
+    .connect('mongodb+srv://rohan:oZlaW1ac1lGv1itM@cluster0-ri8lk.mongodb.net/facultyWireFrame?retryWrites=true&w=majority', 
     { useNewUrlParser: true, useUnifiedTopology: true,useCreateIndex: true  })
     .then(() => {
         app.listen( 5000, ()=>{
