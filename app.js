@@ -39,7 +39,7 @@ app.use((error,req,res,next) => {
 //.connect('mongodb+srv://rohan:qkLzF0DOjiTxbVA3@cluster0-ri8lk.mongodb.net/facultyWireFrame?retryWrites=true&w=majority'
 
 mongoose
-    .connect('mongodb+srv://rohan:qkLzF0DOjiTxbVA3@cluster0-ri8lk.mongodb.net/facultyWireFrame?retryWrites=true&w=majority' || 'mongodb://localhost/faculty-backend',
+    .connect('mongodb+srv://rohan:qkLzF0DOjiTxbVA3@cluster0-ri8lk.mongodb.net/facultyWireFrame?retryWrites=true&w=majority', 
     { useNewUrlParser: true, useUnifiedTopology: true,useCreateIndex: true  })
     .then(() => {
         app.listen( 5000, ()=>{
