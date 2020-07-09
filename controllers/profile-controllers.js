@@ -40,7 +40,7 @@ const createProfile = async (req,res,next) => {
     user = await User.findById(creator);
   }catch(err){
     const error= new HttpError(
-      'creating place failed,please try again',500
+      'creating user failed,please try again',500
     );
     return next(error);
   }

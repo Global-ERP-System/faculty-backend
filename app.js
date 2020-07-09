@@ -1,5 +1,7 @@
 const express = require('express');
-const bodyParser =require('body-parser');
+const bodyParser =require('body-parser'),
+passport    =   require('passport'),
+    localStrategy=  require('passport-local');
 const mongoose = require('mongoose');
 const app = express();
 app.use(bodyParser.json());
@@ -8,9 +10,11 @@ const HttpError = require('./models/http-error');
 
 const academicsRoutes = require('./routes/academics-routes');
 const profileRoutes = require('./routes/profile-routes');
+const userRoutes = require('./routes/user-routes');
 
 app.use('/api/faculty/academics',academicsRoutes);
 app.use('/api/faculty/profile',profileRoutes);
+app.use('/api/faculty/users',userRoutes);
 <<<<<<< HEAD
 // app.use((req,res,next) => {
 //     const error = new HttpError('couldnt find this route',404);
