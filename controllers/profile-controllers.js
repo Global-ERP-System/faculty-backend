@@ -16,7 +16,7 @@ const createProfile = async (req,res,next) => {
   // }
   //should include image also
   const {
-    fullName,address,registrationNumber,phoneNumber,bloodGroup,campusCode,emailId,college,experience,duration,creator
+    fullName,address,registrationNumber,phoneNumber,bloodGroup,campusCode,emailId,college,experience,duration
   }= req.body;
 
   const createdProfile = new profileSchema({
@@ -30,59 +30,68 @@ const createProfile = async (req,res,next) => {
     emailId,
     college,
     experience,
-    duration,
-    creator
+    duration
   });
 
-  let user;
+  // let user;
   
-  try{
-    user = await userSchema.findById(creator);
-  }catch(err){
-    const error= new HttpError(
-      'creating user failed,please try again',500
-    );
-    return next(error);
-  }
+  // try{
+  //   user = await userSchema.findById(creator);
+  // }catch(err){
+  //   const error= new HttpError(
+  //     'creating user failed,please try again',500
+  //   );
+  //   return next(error);
+  // }
 
-  if(!user){
-    const error = new HttpError('Couldnt find user for provided id',404)
-    return next(error);
-  }
+  // if(!user){
+  //   const error = new HttpError('Couldnt find user for provided id',404)
+  //   return next(error);
+  // }
 
-  try{
-    const sess = await mongoose.startSession();
-    sess.startTransaction();
-    await createdProfile.save({session:sess});
-    user.profile = createdProfile;
-    await user.save({session:sess});
-    await sess.commitTransaction();
-  }catch (err) {
-    const error = new HttpError(
-      'Creating profile failed, please try again.',
-      500
-    );
-    return next(error);
-  }
-
+  // try{
+  //   const sess = await mongoose.startSession();
+  //   sess.startTransaction();
+  //   await createdProfile.save({session:sess});
+  //   user.profile = createdProfile;
+  //   await user.save({session:sess});
+  //   await sess.commitTransaction();
+  // }catch (err) {
+  //   const error = new HttpError(
+  //     'Creating profile failed, please try again.',
+  //     500
+  //   );
+  //   return next(error);
+  // }
+createdProfile.save()
+  .then(function( data) {
+    console.log(data);
+    
+})
+.catch(function(error){
+ console.log(error);
+});
   res.status(201).json({ profile: createdProfile.toObject({getters:true}) });
 
 }
 
 const updateProfilebyUserId = async (req,res,next) => {
-  const errors= validationResult(req);
-  if(!errors.isEmpty()){
-    return next(
-      new HttpError('Invalid inputs passed , please check your data ',422)
-    );
-  }
+  // const errors= validationResult(req);
+  // if(!errors.isEmpty()){
+  //   return next(
+  //     new HttpError('Invalid inputs passed , please check your data ',422)
+  //   );
+  // }
   
   const {fullName,address,phoneNumber,bloodGroup,emailId} =req.body;
   const profileId = req.params.profid;
-
+  console.log(profileId);
+  
   let profile;
   try{
-    profile = Profile.findById(profileId);
+    profile = await profileSchema.findById(profileId);
+    console.log(profile);
+    
   }catch(err){
     const error = new HttpError(
       'Something went wrong, couldnt update profile',500
@@ -96,36 +105,44 @@ const updateProfilebyUserId = async (req,res,next) => {
   profile.bloodGroup = bloodGroup;
   profile.emailId = emailId; 
   
-  let user;
+  // let user;
   
-  try{
-    user = await User.profile.findById(profileId);
-  }catch(err){
-    const error= new HttpError(
-      'creating place failed,please try again',500
-    );
-    return next(error);
-  }
+  // try{
+  //   user = await User.profile.findById(profileId);
+  // }catch(err){
+  //   const error= new HttpError(
+  //     'creating place failed,please try again',500
+  //   );
+  //   return next(error);
+  // }
 
-  if(!user){
-    const error = new HttpError('Couldnt find user for provided id',404)
-    return next(error);
-  }
+  // if(!user){
+  //   const error = new HttpError('Couldnt find user for provided id',404)
+  //   return next(error);
+  // }
 
-  try{
-    const sess = await mongoose.startSession();
-    sess.startTransaction();
-    await profile.save({session:sess});
-    user.profile = profile;
-    await user.save({session :sess});
-    await sess.commitTransaction();
-  }catch(err){
-    const error = new HttpError(
-      'Something went wrong,couldnt update profile',500
-    );
-    return next(error);
-  }
+  // try{
+  //   const sess = await mongoose.startSession();
+  //   sess.startTransaction();
+  //   await  .save({session:sess});
+  //   user.profile = profile;
+  //   await user.save({session :sess});
+  //   await sess.commitTransaction();
+  // }catch(err){
+  //   const error = new HttpError(
+  //     'Something went wrong,couldnt update profile',500
+  //   );
+  //   return next(error);
+  // }
 
+  profile.save()
+  .then(function( data) {
+    console.log(data); 
+})
+.catch(function(error){
+ console.log(error);
+});
+ 
   res.status(200).json({profile:  profile.toObject({getters:true})});
 
 }

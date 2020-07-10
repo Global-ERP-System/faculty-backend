@@ -8,15 +8,15 @@ const profileSchema = new Schema({
   image:{type:String},
   fullName:{type:String,required:true},
   address:{type:String,required:true},
-  registrationNumber:{type:Number,required:true},
+  registrationNumber:{type:String,required:true,unique:true},
   phoneNumber:{type:Number,required:true,unique:true},
   bloodGroup:{type:String,required:true},
-  campusCode:{type:Number,required:true,unique:true},
+  campusCode:{type:String,required:true,unique:true},
   emailId:{type:String,required:true,unique:true},
   college:{type:String,required:true},
   experience:{type:String,required:true},
-  duration:{type:Number,required:true},
-  creator : {  type : mongoose.Types.ObjectId,required:true, ref : 'User'}
+  duration:{type:String,required:true}
+  // creator : {  type : mongoose.Types.ObjectId,required:true, ref : 'User'}
   
 });
 

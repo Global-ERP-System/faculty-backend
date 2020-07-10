@@ -36,14 +36,22 @@ const signup = async (req,res,next)=>{
     password
   }) 
 
-  try{
-    await newUser.save();
-  }catch(err){
-    const error = new HttpError(
-      'creating user failed , please try again',500
-    );
-    return next(error);
-  }
+  // try{
+  //   await newUser.save();
+  // }catch(err){
+  //   const error = new HttpError(
+  //     'creating user failed , please try again',500
+  //   );
+  //   return next(error);
+  // }
+
+  newUser.save()
+  .then(function( data) {
+    console.log(data); 
+})
+.catch(function(error){
+ console.log(error);
+});
 
   res.status(201).json({user:newUser.toObject({getters: true})});
   

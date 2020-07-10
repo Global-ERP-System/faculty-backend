@@ -21,7 +21,7 @@ timetableRoutes = require('./routes/timetable-routes');
 app.use('/api/faculty/academics',academicsRoutes);
 app.use('/api/faculty/profile',profileRoutes);
 // app.use('api/faculty/academics/timetable',timetableRoutes);
-// app.use('/api/faculty/users',userRoutes);
+app.use('/api/faculty/users',userRoutes);
 
 
 app.use((error,req,res,next) => {
