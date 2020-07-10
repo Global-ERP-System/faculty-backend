@@ -16,7 +16,7 @@ const createProfile = async (req,res,next) => {
   // }
   //should include image also
   const {
-    fullName,address,registrationNumber,phoneNumber,bloodGroup,campusCode,emailId,college,experience,duration
+    fullName,address,registrationNumber,phoneNumber,bloodGroup,campusCode,emailId,college,experience,duration,creator
   }= req.body;
 
   const createdProfile = new profileSchema({
@@ -30,40 +30,30 @@ const createProfile = async (req,res,next) => {
     emailId,
     college,
     experience,
-    duration
+    duration,
+    creator
   });
 
-  // let user;
+  let user;
   
-  // try{
-  //   user = await userSchema.findById(creator);
-  // }catch(err){
-  //   const error= new HttpError(
-  //     'creating user failed,please try again',500
-  //   );
-  //   return next(error);
-  // }
+  try{
+    user = await userSchema.findById(creator);
+  }catch(err){
+    const error= new HttpError(
+      'creating user failed,please try again',500
+    );
+    return next(error);
+  }
 
-  // if(!user){
-  //   const error = new HttpError('Couldnt find user for provided id',404)
-  //   return next(error);
-  // }
+  if(!user){
+    const error = new HttpError('Couldnt find user for provided id',404)
+    return next(error);
+  }
 
-  // try{
-  //   const sess = await mongoose.startSession();
-  //   sess.startTransaction();
-  //   await createdProfile.save({session:sess});
-  //   user.profile = createdProfile;
-  //   await user.save({session:sess});
-  //   await sess.commitTransaction();
-  // }catch (err) {
-  //   const error = new HttpError(
-  //     'Creating profile failed, please try again.',
-  //     500
-  //   );
-  //   return next(error);
-  // }
-createdProfile.save()
+  try{
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    createdProfile.save({session:sess})
   .then(function( data) {
     console.log(data);
     
@@ -71,6 +61,31 @@ createdProfile.save()
 .catch(function(error){
  console.log(error);
 });
+    user.profile = createdProfile;
+     user.save({session:sess})
+    .then(function( data) {
+      console.log(data);
+      
+  })
+  .catch(function(error){
+   console.log(error);
+  });
+    await sess.commitTransaction();
+  }catch (err) {
+    const error = new HttpError(
+      'Creating profile failed, please try again.',
+      500
+    );
+    return next(error);
+  }
+// createdProfile.save()
+//   .then(function( data) {
+//     console.log(data);
+    
+// })
+// .catch(function(error){
+//  console.log(error);
+// });
   res.status(201).json({ profile: createdProfile.toObject({getters:true}) });
 
 }
