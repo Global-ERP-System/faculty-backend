@@ -5,14 +5,9 @@ const HttpError = require('../models/http-error');
 const regLecSchema = require('../models/academicsSchema/attendanceSchemas/regLecSchema');
 const extraLecSchema = require('../models/academicsSchema/attendanceSchemas/extraLecSchema');
 const viewStudentsSchema = require('../models/academicsSchema/attendanceSchemas/viewStudentsSchema');
+const examMarksSchema = require('../models/academicsSchema/examMarksSchema');
 
-//get the rollnos as soon as class 6E is clicked
-// const getrollNos =(req,res,next) =>{
-//   const rollNoId = req.params.rollNoId;
-
-// }
-
-
+//ATTENDANCE
 const postAttendanceByRegLec =  async (req,res,next) => {
 
   // const errors= validationResult(req);
@@ -31,24 +26,12 @@ const postAttendanceByRegLec =  async (req,res,next) => {
  
   const  dateStr = date  + "-" + month + "-"  + year;
 
-  let presentDays = 0;
 
   const createRegLecture = new regLecSchema({
     regLec:regLec,
     date : dateStr
   })
-  let newRegLect;
-  // try{
-  //   // console.log(createRegLecture);
-  //    newRegLect = await createRegLecture.save();
-  //   console.log(createRegLecture);
-  // }catch(err){
-  //   const error = new HttpError(
-  //     'creating reg lec failed,please try again',
-  //     500
-  //   );
-  //   return next(error);
-  // }
+
   createRegLecture.save()
   .then(function( data) {
     console.log(data);
@@ -82,24 +65,14 @@ const postAttendanceByExtraLec = async (req,res,next) => {
     date : dateStr
   })
 
-  // try{
-  //   await createExtraLecture.save();
-  // }catch(err){
-  //   const error = new HttpError(
-  //     'creating extra lec failed,please try again',
-  //     500
-  //   );
-  //   return next(error);
-  // }
 
   createExtraLecture.save()
   .then(function( data) {
     console.log(data);
-    
-})
-.catch(function(error){
- console.log(error);
-});
+  })
+  .catch(function(error){
+  console.log(error);
+  });
   
   res.status(201).json({extraLec:createExtraLecture.toObject({getters:true})});
 };
@@ -205,6 +178,28 @@ var presentDaysArray = [];
 
 // };
 
+//STUDENT MARKS
+
+const postExamMarks = async (req,res,next) => {
+
+  const  {rollNos,midTerms,continousEvaluation,finals} = req.body;
+
+  const newExamMarks = new examMarksSchema({
+    rollNos:rollNos,
+    midTerms:midTerms,
+    continousEvaluation:continousEvaluation,
+    finals:finals
+  })
+
+  newExamMarks.save()
+  .then((data) => {console.log(data)})
+  .catch((err) => {console.log(err)})
+
+  res.status(200).json({examMarks : newExamMarks.toObject({getters:true})}) 
+
+}
+
+exports.postExamMarks = postExamMarks;
 exports.postAttendanceByRegLec = postAttendanceByRegLec;
 exports.postAttendanceByExtraLec = postAttendanceByExtraLec;
 exports.getAttendanceByViewStudents =getAttendanceByViewStudents;
