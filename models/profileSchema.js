@@ -15,8 +15,8 @@ const profileSchema = new Schema({
   emailId:{type:String,required:true,unique:true},
   college:{type:String,required:true},
   experience:{type:String,required:true},
-  duration:{type:String,required:true}
-  // creator : {  type : mongoose.Types.ObjectId,required:true, ref : 'User'}
+  duration:{type:String,required:true},
+  creator : {  type : mongoose.Types.ObjectId,required:true, ref : 'User'}
   
 });
 
