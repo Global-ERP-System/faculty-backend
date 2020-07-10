@@ -1,5 +1,5 @@
 const HttpError = require('../models/http-error');
-const userSchema = require('../models/userSchema');
+const userSchema = require('../models/userSchemas/userSchema');
 const  mongoose  = require('mongoose');
 // const { validationResult } = require('express-validator');
 

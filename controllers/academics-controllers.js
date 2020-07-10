@@ -2,10 +2,9 @@
 
 const HttpError = require('../models/http-error');
 
-const regLecSchema = require('../models/attendanceSchemas/regLecSchema');
-const extraLecSchema = require('../models/attendanceSchemas/extraLecSchema');
-const viewStudentsSchema = require('../models/attendanceSchemas/viewStudentsSchema');
-const { create } = require('../models/attendanceSchemas/regLecSchema');
+const regLecSchema = require('../models/academicsSchema/attendanceSchemas/regLecSchema');
+const extraLecSchema = require('../models/academicsSchema/attendanceSchemas/extraLecSchema');
+const viewStudentsSchema = require('../models/academicsSchema/attendanceSchemas/viewStudentsSchema');
 
 //get the rollnos as soon as class 6E is clicked
 // const getrollNos =(req,res,next) =>{
