@@ -15,8 +15,8 @@ const HttpError = require('./models/http-error');
 
 const academicsRoutes = require('./routes/academics-routes');
 const profileRoutes = require('./routes/profile-routes');
-const userRoutes = require('./routes/user-routes'),
-timetableRoutes = require('./routes/timetable-routes');
+const userRoutes = require('./routes/user-routes');
+// const timetableRoutes = require('./routes/timetable-routes');
 
 app.use('/api/faculty/academics',academicsRoutes);
 app.use('/api/faculty/profile',profileRoutes);
