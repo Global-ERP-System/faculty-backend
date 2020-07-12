@@ -1,6 +1,9 @@
 const HttpError = require('../models/http-error');
 
-const internshipSchema = require('../models/homeSchemas/internshipSchema');
+const internshipSchema = require('../models/homeSchemas/internshipSchema'),
+    applicationSchema = require('../models/homeSchemas/raisereqSchema/applicationSchema'),
+    reportSchema = require('../models/homeSchemas/raisereqSchema/reportSchema'),
+    documentSchema = require('../models/homeSchemas/raisereqSchema/documentSchema');
 
 const getInternshipDetails = async (req,res,next) => {
   const classId = req.params.classId;
@@ -18,4 +21,54 @@ const getInternshipDetails = async (req,res,next) => {
 
 };
 
+const postApplication = async (req,res,next)=>{
+  const application = req.body;
+  
+  const createApplication = new applicationSchema({
+    fromDate : application.fromDate,
+    toDate : application.toDate,
+    reason : application.reason
+  });
+  createApplication.save()
+    .then((data)=>{
+      res.status(201).json({application:createApplication.toObject({getters:true})});
+    })
+    .catch((error)=>{
+      console.log(error);
+    });
+
+}
+
+ const postReport = async (req,res,next)=>{
+   const report = req.body;
+   const createReport = new reportSchema({
+     report : report.report
+   });
+   createReport.save()
+   .then((data)=>{
+    res.status(201).json({report:createReport.toObject({getters:true})});
+   })
+   .catch((error)=>{
+     console.log(error);
+   })
+
+ }
+
+const postDocument = async (req,res,next)=>{
+  const document = req.body;
+  const createDocument = new documentSchema({
+    document : document.document
+  });
+  createDocument.save()
+  .then((data)=>{
+    res.status(201).json({document : createDocument.toObject({getters:true})});
+  })
+  .catch((error)=>{
+    console.log(error);
+  });
+}
+
 exports.getInternshipDetails = getInternshipDetails;
+exports.postApplication = postApplication;
+exports.postReport = postReport;
+exports.postDocument = postDocument;
