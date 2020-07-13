@@ -90,46 +90,25 @@ const getAttendanceByViewStudents = async (req,res,next) => {
     );
     return next(error);
   }
-// // console.log(regLecAttendance);
-//   let currentAttendance;
-//   try{
-//     currentAttendance = await viewStudentsSchema.find({date : dateId});
-//   }catch(err){
-//     const error = new HttpError(
-//       'getting attendance failed,please try again',
-//       500
-//     );
-//     return next(error);
-//   }
-//   // console.log(currentAttendance);
-//   console.log(currentAttendance.presentDaysArray);
+
+  let currentAttendance;
+  try{
+    currentAttendance = await viewStudentsSchema.find({date : dateId});
+  }catch(err){
+    const error = new HttpError(
+      'getting attendance failed,please try again',
+      500
+    );
+    return next(error);
+  }
   
-  // const presentDaysArrayRegLec = regLecAttendance.present;
-  // let presentDays = currentAttendance.presentDaysArray;
-  // let absentDays = currentAttendance.absentDaysArray;
-  // console.log(regLecAttendance.present);
-  // console.log( regLecAttendance[0].regLec.present);
+
   
-  // regLecAttendance.regLec.present.map( p => {
-  //   if(p.value === true){
-  //     presentDays +=1;
-  //   }else{
-  //     absentDays +=1;
-  //   }
-  // })
-var presentDays=0;
-var absentDays=0;
-var presentDaysArray = [];
-  regLecAttendance.map(r=>{
-    r.regLec.present.map( p => {
-        if(p === true){
-          presentDays+=1;
-        }else{
-          absentDays +=1;
-        }
-      })
-  })
-  // console.log('value',presentDays);
+ 
+
+  const presentRegLecValues = regLecAttendance[0].regLec.present;
+  
+
   
 
   let extraLecAttendance;
@@ -145,21 +124,37 @@ var presentDaysArray = [];
 
   // const {presentDaysArrayExtraLec} = extraLecAttendance.present;
 
-  extraLecAttendance.map(e=>{
-    e.extraLec.present.map( p => {
-        if(p === true){
-          presentDays+=1;
-        }else{
-          absentDays +=1;
-        }
-      })
-  })
+  // extraLecAttendance.map(e=>{
+  //   e.extraLec.present.map( p => {
+  //       if(p === true){
+  //         presentDays+=1;
+  //       }else{
+  //         absentDays +=1;
+  //       }
+  //     })
+  // })
 
-  console.log(presentdays);
+  // console.log(presentdays);
+
+  const presentExtraLecValues = extraLecAttendance[0].extraLec.present;
+  
+
+
+  for(var i=0;i<presentRegLecValues.length;i++){
+    if(presentRegLecValues || presentExtraLecValues){
+      currentAttendance.presentDays[i] += presentExtraLecValues[i] + presentRegLecValues[i] ;
+    } 
+   
+  }
+console.log(currentAttendance.presentDays);
+  
 
   currentAttendance.presentDays = presentDays;
   currentAttendance.absentDays = absentDays;
-  currentAttendance.attendance = Math.floor((presentdays)*(100)/(presentdays + absentdays));
+  if(presentDays && absentDays){
+    currentAttendance.attendance = Math.floor((presentdays)*(100)/(presentdays + absentdays));
+
+  }
 
   try{
     await currentAttendance.save();

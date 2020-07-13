@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 const extraLecSchema = new Schema({
     extraLec:{
         rollNos:[{type:String,required:true,unique:true}],
-        present:[{type:Boolean,required:true}]
+        present:[{type:Number,required:true}],
+        absent:[{type:Number,required:true}]
        
     },
     date:{type:String}
