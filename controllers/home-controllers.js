@@ -68,23 +68,23 @@ const postDocument = async (req,res,next)=>{
     console.log(error);
   });
 }
-const getSalaryDetails = async (req,res,next)=>{
-  const salid = req.params.salid;
+// const getSalaryDetails = async (req,res,next)=>{
+//   const salid = req.params.salid;
   
-  try{
-    const getSalary = await salarySchema.findById(salid);
-  }catch(err){
-    const error= new HttpError(
-      'getting details  failed,please try again',500
-    );
-    return next(error);
-  }
+//   try{
+//     const getSalary = await salarySchema.findById(salid);
+//   }catch(err){
+//     const error= new HttpError(
+//       'getting details  failed,please try again',500
+//     );
+//     return next(error);
+//   }
   
-  res.status(200).json({salary : getSalary});
-}
+//   res.status(200).json({salary : getSalary});
+// }
 
 exports.getInternshipDetails = getInternshipDetails;
 exports.postApplication = postApplication;
 exports.postReport = postReport;
 exports.postDocument = postDocument;
-exports.getSalaryDetails = getSalaryDetails;
+// exports.getSalaryDetails = getSalaryDetails;

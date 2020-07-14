@@ -7,6 +7,6 @@ router.get('/studentInternshipDetails/:classId', homeControllers.getInternshipDe
 router.post('/raisereq/application',homeControllers.postApplication);
 router.post('/raisereq/report',homeControllers.postReport);
 router.post('/raisereq/document',homeControllers.postDocument);
-router.get('/salary/:salid',homeControllers.getSalaryDetails);
+// router.get('/salary/:salid',homeControllers.getSalaryDetails);
 
 module.exports =router;
