@@ -3,7 +3,8 @@ const HttpError = require('../models/http-error');
 const internshipSchema = require('../models/homeSchemas/internshipSchema'),
     applicationSchema = require('../models/homeSchemas/raisereqSchema/applicationSchema'),
     reportSchema = require('../models/homeSchemas/raisereqSchema/reportSchema'),
-    documentSchema = require('../models/homeSchemas/raisereqSchema/documentSchema');
+    documentSchema = require('../models/homeSchemas/raisereqSchema/documentSchema'),
+    salarySchema = require('../models/homeSchemas/salarySchema');
 
 const getInternshipDetails = async (req,res,next) => {
   const classId = req.params.classId;
@@ -67,8 +68,23 @@ const postDocument = async (req,res,next)=>{
     console.log(error);
   });
 }
+const getSalaryDetails = async (req,res,next)=>{
+  const salid = req.params.salid;
+  
+  try{
+    const getSalary = await salarySchema.findById(salid);
+  }catch(err){
+    const error= new HttpError(
+      'getting details  failed,please try again',500
+    );
+    return next(error);
+  }
+  
+  res.status(200).json({salary : getSalary});
+}
 
 exports.getInternshipDetails = getInternshipDetails;
 exports.postApplication = postApplication;
 exports.postReport = postReport;
 exports.postDocument = postDocument;
+exports.getSalaryDetails = getSalaryDetails;
