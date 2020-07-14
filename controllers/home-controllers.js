@@ -5,7 +5,8 @@ const internshipSchema = require('../models/homeSchemas/internshipSchema'),
     reportSchema = require('../models/homeSchemas/raisereqSchema/reportSchema'),
     documentSchema = require('../models/homeSchemas/raisereqSchema/documentSchema'),
     salarySchema = require('../models/homeSchemas/salarySchema'),
-    feedbackSchema = require('../models/homeSchemas/feedbackSchema');
+    feedbackSchema = require('../models/homeSchemas/feedbackSchema'),
+    appreciationsSchema = require('../models/homeSchemas/appreciationSchema');
 
 const getInternshipDetails = async (req,res,next) => {
   const classId = req.params.classId;
@@ -99,6 +100,29 @@ const getFeedback = async (req,res,next) => {
   res.status(200).json({feedback:getFeedback.toObject({getters:true})})
 }
 
+const postAppreciations = async (req,res,next) => {
+  const {rollNo,appreciationMessage,badge} = req.body;
+
+  const createAppreciation = new appreciationsSchema({
+    rollNo : rollNo,
+    appreciationMessage:appreciationMessage,
+    badge:badge
+  })
+
+  try{
+    await createAppreciation.save();
+  }catch(err){
+    const error= new HttpError(
+      'saving appreciation failed,please try again',500
+    );
+    return next(error);
+  }
+
+  res.status(200).json({appreciations: createAppreciation.toObject({getters:true})});
+
+}
+
+exports.postAppreciations = postAppreciations;
 exports.getFeedback = getFeedback;
 exports.getInternshipDetails = getInternshipDetails;
 exports.postApplication = postApplication;
