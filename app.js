@@ -17,6 +17,7 @@ const academicsRoutes = require('./routes/academics-routes');
 const profileRoutes = require('./routes/profile-routes');
 const userRoutes = require('./routes/user-routes');
 const homeRoutes = require('./routes/home-routes');
+const campusRoutes = require('./routes/campus-routes');
 // const timetableRoutes = require('./routes/timetable-routes');
 
 app.use('/api/faculty/academics',academicsRoutes);
@@ -24,6 +25,7 @@ app.use('/api/faculty/profile',profileRoutes);
 // app.use('api/faculty/academics/timetable',timetableRoutes);
 app.use('/api/faculty/users',userRoutes);
 app.use('/api/faculty/home',homeRoutes);
+app.use('/api/faculry/campus',campusRoutes);
 
 
 app.use((error,req,res,next) => {
