@@ -92,12 +92,10 @@ const updateProfilebyUserId = async (req,res,next) => {
   
   const {fullName,address,phoneNumber,bloodGroup,emailId} =req.body;
   const profileId = req.params.profid;
-  console.log(profileId);
   
   let profile;
   try{
     profile = await profileSchema.findById(profileId);
-    console.log(profile);
     
   }catch(err){
     const error = new HttpError(
