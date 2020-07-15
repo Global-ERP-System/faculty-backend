@@ -25,7 +25,7 @@ app.use('/api/faculty/profile',profileRoutes);
 // app.use('api/faculty/academics/timetable',timetableRoutes);
 app.use('/api/faculty/users',userRoutes);
 app.use('/api/faculty/home',homeRoutes);
-app.use('/api/faculry/campus',campusRoutes);
+app.use('/api/faculty/campus',campusRoutes);
 
 
 app.use((error,req,res,next) => {

@@ -3,7 +3,7 @@ router = express.Router(),
 campusControllers = require('../controllers/campus-controllers');
 
 
-router.post('assignments',campusControllers.postAssignment);
+router.post('/assignments',campusControllers.postAssignment);
 
 
 
